@@ -19,3 +19,7 @@ alias redo-src='srcv && source .env'
 # Git
 alias git-test='git commit -m '\''WIP'\'' && git stash -u'
 alias git-undo-test='git reset --soft HEAD^'
+
+# Nix
+alias rebuild='sudo nixos-rebuild switch'
+alias edit='sudo nvim /etc/nixos/configuration.nix'
