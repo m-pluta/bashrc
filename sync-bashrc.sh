@@ -6,11 +6,13 @@ cd ~/.config/bashrc || {
     exit 1
 }
 
-# Perform a git pull
-git pull || {
-    echo "Failed to pull from git repository."
-    exit 1
-}
+# Perform a git pull and check for changes
+output=$(git pull)
 
-echo "Successfully updated .config/bashrc"
+# Check if the output contains the string "Already up to date."
+if [[ $output != *"Already up to date."* ]]; then
+    echo "Successfully updated .config/bashrc"
+else
+    echo "No available updates were found."
+fi
 

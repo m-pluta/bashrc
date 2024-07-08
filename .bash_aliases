@@ -11,6 +11,7 @@ alias python='python3'
 alias pipi='pip install'
 alias pipr='pip install -r'
 alias pipf='pip freeze > requirements.txt'
+alias pipu='pip install --upgrade pip'
 
 # Python venv
 alias venv='python -m venv .venv && srcv'
@@ -22,5 +23,5 @@ alias git-test='git commit -m '\''WIP'\'' && git stash -u'
 alias git-undo-test='git reset --soft HEAD^'
 
 # Nix
-alias rebuild='sudo nixos-rebuild switch'
-alias edit='sudo nvim /etc/nixos/configuration.nix'
+alias rebuild='sudo nixos-rebuild switch --flake /etc/nixos#mikey'
+alias edit='sudo nvim /etc/nixos/hosts/default/configuration.nix'
