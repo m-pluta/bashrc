@@ -23,5 +23,6 @@ alias git-prune='git remote prune origin'
 alias git-rm-feature-branch='git branch --merged | grep -v "^\*\\|main" | xargs -n 1 git branch -d'
 
 # Nix
-alias rebuild='sudo nixos-rebuild switch --flake ~/nix#mikey'
-alias edit='sudo nvim ~/nix/home/default.nix'
+alias rebuild='sudo nixos-rebuild switch --flake ~/nixos#mikey'
+alias edit='sudo nvim ~/nixos/home/default.nix'
+
