@@ -19,9 +19,9 @@ alias srcv='source .venv/bin/activate'
 alias redo-src='srcv && source .env'
 
 # Git
-alias git-test='git commit -m '\''WIP'\'' && git stash -u'
-alias git-undo-test='git reset --soft HEAD^'
+alias git-prune='git remote prune origin'
+alias git-rm-feature-branch='git branch --merged | grep -v "^\*\\|main" | xargs -n 1 git branch -d'
 
 # Nix
-alias rebuild='sudo nixos-rebuild switch --flake /etc/nixos#mikey'
-alias edit='sudo nvim /etc/nixos/hosts/default/configuration.nix'
+alias rebuild='sudo nixos-rebuild switch --flake ~/nix#mikey'
+alias edit='sudo nvim ~/nix/home/default.nix'
