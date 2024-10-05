@@ -4,7 +4,8 @@ alias reload='source ~/.bashrc'
 alias please='sudo apt-get'
 alias rmid='rm *:Zone.Identifier'
 alias update='sudo apt-get update && sudo apt-get upgrade'
-alias sync-bashrc="~/.config/bashrc/sync-bashrc.sh"
+alias sync-bashrc="~/.config/bashrc/sync_bashrc.sh"
+alias setup-bashrc="~/.config/bashrc/setup_symlink.sh"
 
 # Python and pip
 alias python='python3'

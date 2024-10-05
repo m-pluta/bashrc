@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# Get the directory where the script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Define the source and target directories
-SRC_DIR="$HOME/.config/bashrc"
+SRC_DIR="$SCRIPT_DIR"  # Use the directory where the script is located as the source
 TARGET_DIR="$HOME"
 
 # Create symlinks
