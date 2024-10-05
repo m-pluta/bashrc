@@ -126,3 +126,8 @@ eval "$(direnv hook bash)"
 
 . "$HOME/.asdf/asdf.sh"
 . "$HOME/.asdf/completions/asdf.bash"
+
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/github
+ssh-add ~/.ssh/cosma
+ssh-add ~/.ssh/indyscc
