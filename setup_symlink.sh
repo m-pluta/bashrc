@@ -7,12 +7,24 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SRC_DIR="$SCRIPT_DIR"  # Use the directory where the script is located as the source
 TARGET_DIR="$HOME"
 
-# Create symlinks
-ln -sf "$SRC_DIR/.bashrc" "$TARGET_DIR/.bashrc"
-ln -sf "$SRC_DIR/.bash_aliases" "$TARGET_DIR/.bash_aliases"
-ln -sf "$SRC_DIR/.bash_logout" "$TARGET_DIR/.bash_logout"
+# Function to back up existing files
+backup_file() {
+    local target_file="$1"
+    if [ -e "$target_file" ]; then
+        backup_file="${target_file}.backup.$(date +%Y%m%d%H%M%S)"
+        mv "$target_file" "$backup_file"
+        echo "Backed up $target_file to $backup_file"
+    fi
+}
 
-echo "Symlinks created:"
-echo "$TARGET_DIR/.bashrc -> $SRC_DIR/.bashrc"
-echo "$TARGET_DIR/.bash_aliases -> $SRC_DIR/.bash_aliases"
-echo "$TARGET_DIR/.bash_logout -> $SRC_DIR/.bash_logout"
+# Back up and create symlinks
+for file in .bashrc .bash_aliases .bash_logout; do
+    target_file="$TARGET_DIR/$file"
+    src_file="$SRC_DIR/$file"
+    
+    backup_file "$target_file"  # Back up the existing file
+    ln -sf "$src_file" "$target_file"  # Create the symlink
+    
+    echo "Symlink created: $target_file -> $src_file"
+done
+

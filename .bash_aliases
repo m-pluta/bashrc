@@ -2,6 +2,8 @@
 alias c='clear'
 alias reload='source ~/.bashrc'
 alias size="sudo du -sh .[!.]* *"
+alias ls="ls -A --color=auto"
+alias vim="lvim"
 
 # Ubuntu/WSL
 alias update='sudo apt-get update && sudo apt-get upgrade'
@@ -39,6 +41,16 @@ alias edit='sudo nvim ~/nixos/home/default.nix'
 
 # Misc
 alias k="kubectl"
+alias dc="docker-compose"
+
+cd () {
+    builtin cd "$@" || return
+    limit=50
+    count=$(ls -1 | wc -l)
+    if [ "$count" -le "$limit" ]; then
+        ls
+    fi
+}
 
 mkcd() {
     mkdir -p "$1" && cd "$1"
@@ -70,8 +82,7 @@ flamegraph() {
         echo "Example: flamegraph \"ls -l\" 99"
         return 1
     fi
-
-    local freq=${2:-99}
+ls -lAh    local freq=${2:-99}
 
     # Check if FlameGraph directory exists, if not clone it
     local flamegraph_dir="$HOME/FlameGraph"
@@ -135,3 +146,4 @@ upload() {
         echo "Failed to upload file."
     fi
 }
+

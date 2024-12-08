@@ -122,12 +122,13 @@ eval "$(direnv hook bash)"
 . "$HOME/.asdf/asdf.sh"
 . "$HOME/.asdf/completions/asdf.bash"
 
-. ~/app-cred-indyscc.sh
-
-eval "$(ssh-agent -s)" >> /dev/null
-ssh-add ~/.ssh/github
-ssh-add ~/.ssh/cosma
-ssh-add ~/.ssh/indyscc
-ssh-add ~/.ssh/hamilton
+eval "$(ssh-agent -s)" >> ~/.ssh/logs 2>&1
+ssh-add ~/.ssh/github >> ~/.ssh/logs 2>&1
+ssh-add ~/.ssh/cosma >> ~/.ssh/logs 2>&1
+ssh-add ~/.ssh/hamilton >> ~/.ssh/logs 2>&1
 
 . "$HOME/.cargo/env"
+
+eval "$(direnv hook bash)"
+
+export PATH="$HOME/.local/bin:$PATH"
