@@ -117,9 +117,7 @@ fi
 
 eval "$(starship init bash)"
 eval "$(direnv hook bash)"
-
-. "$HOME/.asdf/asdf.sh"
-. "$HOME/.asdf/completions/asdf.bash"
+. <(asdf completion bash)
 
 eval "$(ssh-agent -s)" >> ~/.ssh/logs 2>&1
 for pubkey in ~/.ssh/*.pub; do
