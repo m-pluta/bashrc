@@ -115,7 +115,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-eval "$(zoxide init bash)"
 eval "$(starship init bash)"
 eval "$(direnv hook bash)"
 
@@ -123,12 +122,13 @@ eval "$(direnv hook bash)"
 . "$HOME/.asdf/completions/asdf.bash"
 
 eval "$(ssh-agent -s)" >> ~/.ssh/logs 2>&1
-ssh-add ~/.ssh/github >> ~/.ssh/logs 2>&1
-ssh-add ~/.ssh/cosma >> ~/.ssh/logs 2>&1
-ssh-add ~/.ssh/hamilton >> ~/.ssh/logs 2>&1
+for pubkey in ~/.ssh/*.pub; do
+  privkey="${pubkey%.pub}"
+  if [ -f "$privkey" ]; then
+    ssh-add "$privkey" >> ~/.ssh/logs 2>&1
+  fi
+done
 
 . "$HOME/.cargo/env"
-
-eval "$(direnv hook bash)"
 
 export PATH="$HOME/.local/bin:$PATH"

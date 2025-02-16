@@ -22,9 +22,9 @@ alias q="squeue"
 # Python & pip
 alias python='python3'
 alias pipi='pip install'
-alias pipr='pip install -r'
+alias pipr='pip install -r requirements.txt'
 alias pipf='pip freeze > requirements.txt'
-alias pipu='pip install --upgrade pip'
+alias pipu='python -m pip install --upgrade pip && pip install --upgrade pip'
 
 # Python venv
 alias venv='python -m venv .venv && srcv'
@@ -42,6 +42,10 @@ alias edit='sudo nvim ~/nixos/home/default.nix'
 # Misc
 alias k="kubectl"
 alias dc="docker-compose"
+
+function t {
+  pushd $(mktemp -d /tmp/$1.XXXX)
+}
 
 cd () {
     builtin cd "$@" || return
@@ -82,7 +86,8 @@ flamegraph() {
         echo "Example: flamegraph \"ls -l\" 99"
         return 1
     fi
-ls -lAh    local freq=${2:-99}
+    ls -lAh    
+    local freq=${2:-99}
 
     # Check if FlameGraph directory exists, if not clone it
     local flamegraph_dir="$HOME/FlameGraph"
