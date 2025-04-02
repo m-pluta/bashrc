@@ -134,6 +134,7 @@ fi
 #   fi
 # done
 
-. "$HOME/.asdf/asdf.sh"
-. "$HOME/.asdf/completions/asdf.bash"
-. "$HOME/.cargo/env"
+[ -f "$HOME/.asdf/asdf.sh" ] && . "$HOME/.asdf/asdf.sh"
+[ -f "$HOME/.asdf/completions/asdf.bash" ] && . "$HOME/.asdf/completions/asdf.bash"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
