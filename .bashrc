@@ -138,3 +138,5 @@ fi
 [ -f "$HOME/.asdf/completions/asdf.bash" ] && . "$HOME/.asdf/completions/asdf.bash"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
+source ~/.bash_aliases
+export PAGER=less

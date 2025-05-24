@@ -71,6 +71,35 @@ addalias() {
     echo "Alias '$alias_name' added successfully."
 }
 
+function flagman() {
+  emulate -L zsh
+
+  local cmd=$1
+  local out
+  out=$(man "$cmd") || return $?
+  out=$(echo "$out" | col -b)
+
+  local cleaned=$(echo "$out" | grep -E "^\s*-")
+  [[ -z "$cleaned" ]] && cleaned=$out
+
+  local padding=3
+  # Write to file to avoid passing large strings on the command line
+  local tmpfile=$(mktemp)
+  echo "$out" > "$tmpfile"
+  local match=$(echo "$cleaned" | fzf --ansi --preview "cat $tmpfile | grep -A \$(expr \$(tput lines) - $padding) -B 0 \"\$(echo {} | sed 's/[\\\"\\[*^$]/\\\\&/g')\"")
+  rm "$tmpfile"
+
+  [[ -z "$match" ]] && return;
+
+  local escaped=$(echo "$match" | sed 's/[.[\(*^$+?{|]/\\&/g')
+
+  echo "$out" | less +/"$escaped"
+}
+
+if [[ -n "$ZSH_VERSION" ]]; then
+  compdef _man flagman
+fi
+
 rmalias() {
     local alias_name="$1"
 
@@ -167,4 +196,46 @@ upload() {
     else
         echo "Failed to upload file."
     fi
+}
+
+background_run() {
+  local cmd="$1"
+  local outfile="$2"
+  local pidfile="${3:-.background_pids}"  # default PID file
+
+  if [[ -z "$cmd" || -z "$outfile" ]]; then
+    echo "Usage: background_run \"<command>\" \"<output_file\" [pid_file]"
+    return 1
+  fi
+
+  touch "$outfile"
+  nohup bash -c "$cmd" &>>"$outfile" < /dev/null &
+  local pid=$!
+  echo "$pid" >> "$pidfile"
+
+  echo "Started: '$cmd'"
+  echo "PID: $pid"
+  echo "Logging to: $outfile"
+  echo "Tracking PID in: $pidfile"
+}
+
+kill_background() {
+  local pidfile="${1:-.background_pids}"
+
+  if [[ ! -f "$pidfile" ]]; then
+    echo "No PID file found: $pidfile"
+    return 1
+  fi
+
+  while read -r pid; do
+    if kill -0 "$pid" 2>/dev/null; then
+      echo "Killing PID: $pid"
+      kill "$pid"
+    else
+      echo "PID $pid is not running"
+    fi
+  done < "$pidfile"
+
+  rm -f "$pidfile"
+  echo "Cleared PID file: $pidfile"
 }
