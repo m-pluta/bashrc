@@ -1,0 +1,96 @@
+[user]
+	email = michalpl2003@gmail.com
+	name = Michal Pluta
+
+[init]
+	defaultBranch = main
+
+[core]
+  compression = 9
+  whitespace = error
+  preloadIndex = true
+
+[advice]
+  addEmptyPathspec = false
+  pushNonFastForward = false
+  statusHints = false
+
+[url "git@github.com:m-pluta/"]
+  insteadOf = mp:
+
+[url "git@github.com:"]
+  insteadOf = gh:
+
+[url "git@github.com:openano/openano-"]
+  insteadOf = openano:
+
+[status]
+  branch = true
+  showStash = true
+  showUntrackedFiles = all
+
+[diff]
+  context = 3
+  renames = copies
+  interHunkContext = 10
+
+[pager]
+  diff = diff-so-fancy | $PAGER
+
+[diff-so-fancy]
+  markEmptyLines = true
+
+[color "diff"]
+  meta = black bold
+  frag = magenta
+  context = white
+  whitespace = yellow reverse
+  old = red
+
+[interactive]
+  diffFilter = diff-so-fancy --patch
+  singleKey = true
+
+[push]
+  autoSetupRemote = true
+  default = current
+  followTags = true
+
+[pull]
+  default = current
+  rebase = true
+
+[rebase]
+  autoStash = true
+  missingCommitsCheck = warn
+
+[log]
+  abbrevCommit = true
+  graphColors = blue,yellow,cyan,magenta,green,red
+
+[color "decorate"]
+  HEAD = red
+  branch = blue
+  tag = yellow
+  remoteBranch = magenta
+
+[color "branch"]
+  current = magenta
+  local = default
+  remote = yellow
+  upstream = green
+  plain = blue
+
+[branch]
+  sort = -committerdate
+
+[tag]
+  sort = -taggerdate
+
+[alias]
+  copycommit = "!f() { \
+      COMMIT_HASH=$1; shift; \
+      git commit --reuse-message=$COMMIT_HASH \
+                 --author=\"$(git show -s --format='%an <%ae>' $COMMIT_HASH)\" \
+                 --date=\"$(git show -s --format='%ad' $COMMIT_HASH)\" \"$@\"; \
+  }; f"
